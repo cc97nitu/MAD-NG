@@ -2072,24 +2072,15 @@ end
 local function beamsize_der(x, sig, mo)
   local nv, xs_4, xs_5 = x:nv(), 0, 0
   local mi, mm = monomial(nv), monomial(nv)
-
   local dsc = damap{ nv=x:nv(), mo=x.mo }[1]:desc()
 
   local i, j = 0, 0
-  repeat i, mi = dsc:nxtbyord(mi)
-    if i < 0 then break end
-    local xi = x:get(mi)
-    if mi:ord() ~= 0 then
-      xi= x:deriv(mi) / mi:ordpf()
-    end
+  repeat i, mi = dsc:nxtbyord(mi); if i < 0 then break end
+    local xi = x:deriv(mi) / mi:ordpf()
 
   local mj = monomial(nv)
-  repeat j, mj = dsc:nxtbyord(mj)
-    if j < 0 then break end
-    local xj = x:get(mj)
-    if mj:ord() ~= 0 then
-      xj = x:deriv(mj) / mj:ordpf()
-    end
+  repeat j, mj = dsc:nxtbyord(mj); if j < 0 then break end
+    local xj = x:deriv(mj) / mj:ordpf()
 
     if mj >= mi and is_ord_even(mi:add(mj,mm)) and
        mj:ord() <= mo and mi:ord() <= mo then
